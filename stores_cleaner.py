@@ -1,6 +1,5 @@
 import pandas as pd
 import time
-
 print('Leyendo store.xlsx')
 df2 = pd.read_excel('store.xlsx', 0)
 print('store.xlsx cargado en memoria')
@@ -17,7 +16,7 @@ df3['Stores ID'].drop_duplicates()
 
 print('Generando stores_limpio_xlsx')
 print('Guardando stores_limpio.xlsx')
-df3.to_excel('stores_limpio.xlsx', 'stores', index=None, )
+df3.to_excel('stores_limpio.xlsx', 'stores', index=None)
 
 print(str(df3['Stores ID'].count()) + ' Tiendas Filtradas Correctamente')
 time.sleep(2)
