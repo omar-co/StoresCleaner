@@ -1,22 +1,28 @@
 import pandas as pd
 import time
-print('Leyendo store.xlsx')
-df2 = pd.read_excel('store.xlsx', 0)
-print('store.xlsx cargado en memoria')
 
-print('Filtrando Columnas')
-df2 = df2[['Stores ID', '# Sucursal Cliente',
+
+def clean_stores(file='store.xlsx', create_excel=True):
+    print('Leyendo ' + file)
+    df1 = pd.read_excel(file, 0)
+    print(file + ' cargado en memoria')
+
+    print('Filtrando Columnas')
+    df1 = df1[['Stores ID', '# Sucursal Cliente',
            'Cadena', 'Formato', 'Nombre Tienda', 'Region', 'Zona', 'Area Nielsen', 'Estatus de Tienda', 'Canal']]
 
-print('Filtrando Regiones')
-df3 = df2[(df2.Region.str.contains(r'^(region)\s\d{1,2}$') | df2.Region.str.contains('^DPP1$'))]
+    print('Filtrando Regiones')
+    df2 = df1[(df1.Region.str.contains(r'^(region)\s\d{1,2}$') | df1.Region.str.contains('^DPP1$'))]
 
-print('Eliminando Duplicados')
-df3['Stores ID'].drop_duplicates()
+    print('Eliminando Duplicados')
+    df2['Stores ID'].drop_duplicates()
 
-print('Generando stores_limpio_xlsx')
-print('Guardando stores_limpio.xlsx')
-df3.to_excel('stores_clean.xlsx', 'stores', index=None)
+    if create_excel:
+        print('Generando stores_clean_xlsx')
+        df2.to_excel('stores_clean.xlsx', 'stores', index=None)
 
-print(str(df3['Stores ID'].count()) + ' Tiendas Filtradas Correctamente')
-time.sleep(2)
+    print(str(df2['Stores ID'].count()) + ' Tiendas Filtradas Correctamente')
+    time.sleep(2)
+    return df2
+
+clean_stores()
